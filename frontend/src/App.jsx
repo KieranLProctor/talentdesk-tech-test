@@ -1,15 +1,25 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { z } from 'zod';
 
-const App = () => {
+const schema = z.object({
+  name: z.string().min(1, 'Name is required').max(100, 'Name must be 100 characters or fewer'),
+  message: z.string().min(1, 'Message is required').max(1000, 'Message must be 1000 characters or fewer'),
+});
+
+function App() {
   const [formData, setFormData] = useState({ name: '', message: '' });
   const [file, setFile] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -21,6 +31,18 @@ const App = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    const result = schema.safeParse(formData);
+    if (!result.success) {
+      const errors = {};
+      result.error.issues.forEach((issue) => {
+        errors[issue.path[0]] = issue.message;
+      });
+      setFieldErrors(errors);
+      return;
+    }
+
+    setFieldErrors({});
     try {
       const data = new FormData();
       data.append('name', formData.name);
@@ -33,6 +55,18 @@ const App = () => {
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const inputClass = (field) => `block w-full rounded-lg border bg-gray-50 px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition ${
+    fieldErrors[field]
+      ? 'border-red-300 focus:ring-red-400'
+      : 'border-gray-200 focus:ring-green-500'
+  }`;
+
+  const dropzoneClass = () => {
+    if (isDragActive) return 'border-green-400 bg-green-50';
+    if (file) return 'border-green-300 bg-green-50';
+    return 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100';
   };
 
   return (
@@ -52,7 +86,9 @@ const App = () => {
 
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+
+            {/* Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Name
@@ -62,10 +98,13 @@ const App = () => {
                 id="name"
                 name="name"
                 placeholder="John Doe"
-                className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                className={inputClass('name')}
                 value={formData.name}
                 onChange={handleChange}
               />
+              {fieldErrors.name && (
+                <p className="mt-1.5 text-xs text-red-500">{fieldErrors.name}</p>
+              )}
             </div>
 
             {/* Message */}
@@ -78,26 +117,25 @@ const App = () => {
                 name="message"
                 rows={3}
                 placeholder="Write your message here…"
-                className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition resize-none"
+                className={inputClass('message')}
                 value={formData.message}
                 onChange={handleChange}
               />
+              {fieldErrors.message && (
+                <p className="mt-1.5 text-xs text-red-500">{fieldErrors.message}</p>
+              )}
             </div>
 
             {/* File drop zone */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Attachment <span className="text-gray-400 font-normal">(optional)</span>
-              </label>
+              <p className="block text-sm font-medium text-gray-700 mb-1.5">
+                Attachment
+                {' '}
+                <span className="text-gray-400 font-normal">(optional)</span>
+              </p>
               <div
                 {...getRootProps()}
-                className={`flex flex-col items-center justify-center gap-2 w-full rounded-lg border-2 border-dashed px-4 py-7 cursor-pointer transition-colors ${
-                  isDragActive
-                    ? 'border-green-400 bg-green-50'
-                    : file
-                    ? 'border-green-300 bg-green-50'
-                    : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
-                }`}
+                className={`flex flex-col items-center justify-center gap-2 w-full rounded-lg border-2 border-dashed px-4 py-7 cursor-pointer transition-colors ${dropzoneClass()}`}
               >
                 <input {...getInputProps()} />
                 {file ? (
@@ -108,7 +146,11 @@ const App = () => {
                       </svg>
                     </div>
                     <p className="text-sm font-medium text-gray-800">{file.name}</p>
-                    <p className="text-xs text-gray-400">{(file.size / 1024).toFixed(1)} KB</p>
+                    <p className="text-xs text-gray-400">
+                      {(file.size / 1024).toFixed(1)}
+                      {' '}
+                      KB
+                    </p>
                   </>
                 ) : (
                   <>
@@ -165,6 +207,6 @@ const App = () => {
       </div>
     </div>
   );
-};
+}
 
 export default App;

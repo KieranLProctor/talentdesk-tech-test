@@ -31,6 +31,8 @@ Multer - For easy handling of multipart form data, also provides disk storage co
 
 React Dropzone - Easy to use hook for drag-and-drop input with an easy api and allows easy custom styling.
 
+ESLint - For project linting - used as it's pretty much the gold stadard.
+
 ## Bonus
 
 Add an AI agent method (e.g. a Claude Code skill) to run linting and automatically fix any issues found
