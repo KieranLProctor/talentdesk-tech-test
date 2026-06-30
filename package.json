@@ -8,10 +8,12 @@
     "start-frontend": "vite frontend"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.2",
     "dotenv": "^16.0.0",
     "express": "^5.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",

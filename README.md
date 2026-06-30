@@ -23,6 +23,10 @@ Make the following changes:
 
 You may add any relevant 3rd party libraries. Please explain why you have chosen them.
 
+### Explanations
+
+TailwindCSS - This was added as I'm most comfortable using this for frontend - it's also fairly standard for new projects.
+
 ## Bonus
 
 Add an AI agent method (e.g. a Claude Code skill) to run linting and automatically fix any issues found
