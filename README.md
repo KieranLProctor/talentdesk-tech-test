@@ -27,6 +27,10 @@ You may add any relevant 3rd party libraries. Please explain why you have chosen
 
 TailwindCSS - This was added as I'm most comfortable using this for frontend - it's also fairly standard for new projects.
 
+Multer - For easy handling of multipart form data, also provides disk storage control for setting where files are stored and named.
+
+React Dropzone - Easy to use hook for drag-and-drop input with an easy api and allows easy custom styling.
+
 ## Bonus
 
 Add an AI agent method (e.g. a Claude Code skill) to run linting and automatically fix any issues found
