@@ -41,6 +41,8 @@ Jest DOM - This was added for better code readability, adding DOM matchers which
 
 Supertest - This was added as it allows for the backend to be running as a test HTTP server which lets you make real requests without having to bind any ports etc - essentially allows you to use the project as it would be but without having to manage a server in the tests.
 
+ZOD - This was added as it is one of the best and easiest ways to add validation to forms and the backend, it allows for many different rules and can be customised to needs.
+
 ## Bonus
 
 Add an AI agent method (e.g. a Claude Code skill) to run linting and automatically fix any issues found

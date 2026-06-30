@@ -50,6 +50,7 @@ function App() {
       if (file) data.append('file', file);
 
       const res = await fetch('/api/submit', { method: 'POST', body: data });
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const json = await res.json();
       setResponse(json);
     } catch (err) {
