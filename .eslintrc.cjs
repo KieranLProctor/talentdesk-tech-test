@@ -1,5 +1,9 @@
 module.exports = {
   root: true,
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
   overrides: [
     {
       files: ['frontend/**/*.{js,jsx}'],
@@ -21,7 +25,7 @@ module.exports = {
     },
     {
       // Vite config legitimately imports devDependencies; @tailwindcss/vite is unresolvable by the import plugin
-      files: ['frontend/*.config.js'],
+      files: ['frontend/*.config.js', 'vitest.config.js'],
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'import/no-unresolved': 'off',
@@ -38,6 +42,8 @@ module.exports = {
       rules: {
         // __dirname is the standard ESM polyfill — not a private variable
         'no-underscore-dangle': ['error', { allow: ['__dirname', '__filename'] }],
+        // Node.js ESM requires explicit .js extensions on relative imports
+        'import/extensions': ['error', 'ignorePackages', { js: 'always' }],
       },
     },
   ],
