@@ -91,6 +91,7 @@ function App() {
 
             {/* Name */}
             <div>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Name
               </label>
@@ -114,6 +115,7 @@ function App() {
 
             {/* Message */}
             <div>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Message
               </label>
@@ -142,10 +144,13 @@ function App() {
                 <span className="text-gray-500 font-normal">(optional)</span>
               </p>
               <div
+                  /* Disabled as package api designed this way */
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
                 {...getRootProps({ 'aria-labelledby': 'attachment-label' })}
                 className={`flex flex-col items-center justify-center gap-2 w-full rounded-lg border-2 border-dashed px-4 py-7 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${dropzoneClass()}`}
               >
-                {/* aria-hidden prevents double-announcement — the div above is the interactive affordance */}
+                {/* Disabled as package api designed this way */}
+                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
                 <input {...getInputProps()} aria-hidden="true" />
                 {file ? (
                   <>

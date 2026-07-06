@@ -1,11 +1,11 @@
 import { config } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// eslint-disable-next-line import/extensions
 import app from './app.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.join(__dirname, '../../.env') });
-
+config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '../../.env') });
+// eslint-disable-next-line no-undef
 const { BACKEND_PORT } = process.env;
 
 // eslint-disable-next-line no-console

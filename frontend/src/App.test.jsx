@@ -1,3 +1,4 @@
+import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -6,6 +7,7 @@ import {
 } from 'vitest';
 import App from './App';
 
+// eslint-disable-next-line no-undef
 global.fetch = vi.fn();
 
 describe('App', () => {
@@ -39,7 +41,9 @@ describe('App', () => {
 
   it('calls fetch and displays the JSON response on successful submit', async () => {
     const user = userEvent.setup();
+    // eslint-disable-next-line no-undef
     global.fetch.mockResolvedValueOnce({
+      ok: true,
       json: async () => ({ name: 'Jane', message: 'Hello', filePath: null }),
     });
     render(<App />);
@@ -49,6 +53,7 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByText(/"name": "Jane"/)).toBeInTheDocument();
     });
+    // eslint-disable-next-line no-undef
     expect(global.fetch).toHaveBeenCalledWith('/api/submit', expect.objectContaining({ method: 'POST' }));
   });
 });
