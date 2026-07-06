@@ -7,7 +7,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '../.env') });
-const { BACKEND_PORT, FRONTEND_PORT } = Node.process.env;
+// eslint-disable-next-line no-undef
+const { BACKEND_PORT, FRONTEND_PORT } = process.env;
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
