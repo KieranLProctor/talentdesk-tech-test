@@ -43,6 +43,7 @@ describe('App', () => {
     const user = userEvent.setup();
     // eslint-disable-next-line no-undef
     global.fetch.mockResolvedValueOnce({
+      ok: true,
       json: async () => ({ name: 'Jane', message: 'Hello', filePath: null }),
     });
     render(<App />);
