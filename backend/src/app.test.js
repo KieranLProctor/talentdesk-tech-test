@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest';
 import request from 'supertest';
+// eslint-disable-next-line import/extensions
 import app from './app.js';
 
 describe('POST /api/submit', () => {
@@ -19,6 +20,7 @@ describe('POST /api/submit', () => {
       .post('/api/submit')
       .field('name', 'Jane')
       .field('message', 'Hello')
+    // eslint-disable-next-line no-undef
       .attach('file', Buffer.from('test content'), 'test.txt');
 
     expect(res.status).toBe(200);

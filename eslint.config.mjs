@@ -9,7 +9,9 @@ import path from 'node:path';
 
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
+// eslint-disable-next-line import/no-unresolved
 import { defineConfig } from 'eslint/config';
+// eslint-disable-next-line import/no-unresolved
 import { configs } from 'eslint-config-airbnb-extended/legacy';
 
 const gitignorePath = path.resolve('.', '.gitignore');
@@ -36,4 +38,15 @@ export default defineConfig([
   ...jsConfig,
   // React config
   ...reactConfig,
+  {
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+    },
+  },
 ]);
